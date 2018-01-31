@@ -274,7 +274,7 @@ int main() {
 			if (too_close){
 				ref_vel -=.224;
 			}
-			else if (rel_vel < 49.5)
+			else if (ref_vel < 49.5)
 			{
 				ref_vel +=.224;
 			}
