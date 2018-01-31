@@ -244,6 +244,31 @@ int main() {
           	// Sensor Fusion Data, a list of all other cars on the same side of the road.
           	auto sensor_fusion = j[1]["sensor_fusion"];
 			
+			
+			if (prev_size > 0)
+			{
+				car_s = end_path_s;
+			}
+			
+			bool too_close = false;
+			
+			for (int i = 0; i < sensor_fusion.size(); i++)
+			{
+				float d = sensor_fusion[i][6];
+				if (d < (2+4*lane+2) && d > (2+4*lane-2))
+				{
+					double vx = sensor_fusion[i][3];
+					double vy = sensor_fusion[i][4];
+					double check_speed = sqrt(vx*vx+vy*vy);
+					double check_car_s = sensor_fusion[i][5];
+					
+					check_car_s += ((double)prev_size*0.2*check_speed);
+					if ((check_car_s > car_s)&&((check_car_s - car_s) <30)){
+						ref_vel = 29.5;
+					}
+				}
+			}
+			
           	json msgJson;
 
           	vector<double> next_x_vals;
@@ -322,7 +347,7 @@ int main() {
 			double target_y = s(target_x);
 			double target_dist = sqrt((target_x)*(target_x)+(target_y)*(target_y));
 			
-			std::cout << "Target Distance:" << target_dist << std::endl;
+			//std::cout << "Target Distance:" << target_dist << std::endl;
 			
 			double x_add_on = 0;
 			
