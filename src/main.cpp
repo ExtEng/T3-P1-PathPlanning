@@ -347,8 +347,7 @@ int main() {
 				next_y_vals.push_back(y_point);
 				
 			}
-			std::cout << "Next_x_vals:" << next_x_vals << std::endl;
-			std::cout << "Next_y_vals:" << next_y_vals << std::endl;
+			
           	// TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
           	/* double dist_inc = 0.3;
 			for(int i = 0; i < 50; i++)
