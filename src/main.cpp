@@ -251,7 +251,6 @@ int main() {
 			
 			int prev_size = previous_path_x.size();
 			
-			
 			vector<double> ptsx;
 			vector<double> ptsy;
 			
@@ -278,6 +277,7 @@ int main() {
 				
 				double ref_x_prev = previous_path_x[prev_size-2];
 				double ref_y_prev = previous_path_y[prev_size-2];
+				
 				ref_yaw = atan2(ref_y-ref_y_prev,ref_x-ref_x_prev);
 				
 				ptsx.push_back(ref_x_prev);
@@ -302,7 +302,7 @@ int main() {
 			for (int i = 0; i < ptsx.size(); i++)
 			{
 				double shift_x = ptsx[i] - ref_x;
-				double shift_y = ptsx[i] - ref_y;
+				double shift_y = ptsy[i] - ref_y;
 				
 				ptsx[i] = (shift_x*cos(0-ref_yaw) - shift_y*sin(0-ref_yaw));
 				ptsy[i] = (shift_x*sin(0-ref_yaw) + shift_y*cos(0-ref_yaw));
@@ -311,6 +311,7 @@ int main() {
 			tk::spline s;
 			
 			s.set_points(ptsx,ptsy);
+			
 			for(int i = 0; i < previous_path_x.size(); i++)
 			{
 				next_x_vals.push_back(previous_path_x[i]);
@@ -321,12 +322,14 @@ int main() {
 			double target_y = s(target_x);
 			double target_dist = sqrt((target_x)*(target_x)+(target_y)*(target_y));
 			
+			std::cout << "Target Distance:" << target_dist << std::endl;
+			
 			double x_add_on = 0;
 			
 			for (int i = 1; i <= 50 - previous_path_x.size(); i++)
 			{
-				double N = (target_dist/(0.02*ref_vel/2.24));
-				double x_point = x_add_on + (target_x)/N;
+				double N = (target_dist/(0.02*(ref_vel/2.24)));
+				double x_point = x_add_on + (target_x/N);
 				double y_point = s(x_point);
 				
 				x_add_on = x_point;
@@ -344,7 +347,8 @@ int main() {
 				next_y_vals.push_back(y_point);
 				
 			}
-			
+			std::cout << "Next_x_vals:" << Next_x_vals << std::endl;
+			std::cout << "Next_y_vals:" << Next_y_vals << std::endl;
           	// TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
           	/* double dist_inc = 0.3;
 			for(int i = 0; i < 50; i++)
