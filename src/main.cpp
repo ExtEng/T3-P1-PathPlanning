@@ -252,30 +252,70 @@ int main() {
 			}
 			
 			bool too_close = false;
+			bool change_lane = false;
+			
+			bool right_lane = false;
+			bool left_lane = false;
 			
 			for (int i = 0; i < sensor_fusion.size(); i++)
 			{
 				float d = sensor_fusion[i][6];
+				double vx = sensor_fusion[i][3];
+				double vy = sensor_fusion[i][4];
+				double check_speed = sqrt(vx*vx+vy*vy);
+				double check_car_s = sensor_fusion[i][5];
+					
+				check_car_s += ((double)prev_size*0.02*check_speed);
+				
 				if ((d < (2+4*lane+2) )&& (d > (2+4*lane-2)))
 				{
-					double vx = sensor_fusion[i][3];
-					double vy = sensor_fusion[i][4];
-					double check_speed = sqrt(vx*vx+vy*vy);
-					double check_car_s = sensor_fusion[i][5];
-					
-					check_car_s += ((double)prev_size*0.02*check_speed);
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30)){
-						//ref_vel = 29.5;
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))
+					{
 						too_close = true;
-						if (lane > 0)
-						{
-							lane = 0;
-						}
-						
+						change_lane = true;
+					}
+				} 
+				else if (d > (2+4*lane+2)) 
+				{
+					if ((check_car_s < car_s - 10)||((check_car_s - car_s) > 30))
+					{
+						right_lane = true;
+					}
+					else
+					{
+						right_lane = false;
+					}
+				} 
+				else if (d < (4*lane))
+				{
+					if ((check_car_s < car_s - 10)||((check_car_s - car_s) > 30))
+					{
+						left_lane = true;
+					}
+					else
+					{
+						left_lane = false;
 					}
 				}
+				
 			}
-			if (too_close){
+			
+			if (change_lane)
+			{
+				if ((left_lane)&&(lane>0))
+				{
+					lane =  lane - 1;
+					too_close = false;
+				}
+				else if (right_lane)&&(lane < 2)
+				{
+					lane = lane + 1;
+					too_close = false;
+				}
+			}
+			
+			if (too_close)
+			{
 				ref_vel -=.224;
 			}
 			else if (ref_vel < 49.5)
