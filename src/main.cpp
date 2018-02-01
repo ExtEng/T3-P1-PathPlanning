@@ -277,7 +277,7 @@ int main() {
 				} 
 				else if (d > (2+4*lane+2)) 
 				{
-					if ((check_car_s < car_s - 10)||((check_car_s - car_s) > 30))
+					if ((check_car_s < car_s - 20)||((check_car_s - car_s) > 20))
 					{
 						right_lane = true;
 					}
@@ -288,7 +288,7 @@ int main() {
 				} 
 				else if (d < (4*lane))
 				{
-					if ((check_car_s < car_s - 10)||((check_car_s - car_s) > 30))
+					if ((check_car_s < car_s - 20)||((check_car_s - car_s) > 20))
 					{
 						left_lane = true;
 					}
@@ -366,16 +366,16 @@ int main() {
 			}
 			
 			vector<double> next_wp0 = getXY(car_s+30,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp1 = getXY(car_s+60,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp2 = getXY(car_s+90,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp1 = getXY(car_s+50,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			//vector<double> next_wp2 = getXY(car_s+90,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
 			
 			ptsx.push_back(next_wp0[0]);
 			ptsx.push_back(next_wp1[0]);
-			ptsx.push_back(next_wp2[0]);
+			//ptsx.push_back(next_wp2[0]);
 			
 			ptsy.push_back(next_wp0[1]);
 			ptsy.push_back(next_wp1[1]);
-			ptsy.push_back(next_wp2[1]);
+			//ptsy.push_back(next_wp2[1]);
 			
 			for (int i = 0; i < ptsx.size(); i++)
 			{
