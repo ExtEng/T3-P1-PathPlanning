@@ -307,7 +307,7 @@ int main() {
 					lane =  lane - 1;
 					too_close = false;
 				}
-				else if (right_lane)&&(lane < 2)
+				else if ((right_lane)&&(lane < 2))
 				{
 					lane = lane + 1;
 					too_close = false;
