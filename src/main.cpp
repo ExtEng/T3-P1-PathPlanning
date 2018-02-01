@@ -266,7 +266,6 @@ int main() {
 				double check_car_s = sensor_fusion[i][5];
 					
 				check_car_s += ((double)prev_size*0.02*check_speed);
-				std::cout << "i:" << i << "d:" << d <<"car speed:" <<check_car_s << std::endl;
 				
 				if ((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2)))
 				{
@@ -278,7 +277,7 @@ int main() {
 				} 
 				else if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s < car_s - 10)||((check_car_s - car_s) > 35))
+					if ((check_car_s < car_s - 15)||((check_car_s - car_s) > 40))
 					{
 						right_lane = true;
 					}
@@ -289,7 +288,7 @@ int main() {
 				} 
 				else if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s < car_s - 10)||((check_car_s - car_s) > 35))
+					if ((check_car_s < car_s - 15)||((check_car_s - car_s) > 40))
 					{
 						left_lane = true;
 					}
@@ -300,6 +299,7 @@ int main() {
 				}
 				
 			}
+			std::cout << "car_s: " << car_s << " car_d: " << car_d <<" Change lane:" << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << std::endl;
 			
 			if (change_lane)
 			{
