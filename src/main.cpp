@@ -246,10 +246,10 @@ int main() {
 			
 			int prev_size = previous_path_x.size();
 			
-			if (prev_size > 0)
+			/* if (prev_size > 0)
 			{
 				car_s = end_path_s;
-			}
+			} */
 			
 			bool too_close = false;
 			bool change_lane = false;
@@ -299,7 +299,7 @@ int main() {
 				}
 				
 			}
-			std::cout << "car_s: " << car_s << " car_d: " << car_d <<" Change lane:" << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << std::endl;
+			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << std::endl;
 			
 			if (change_lane)
 			{
