@@ -259,7 +259,7 @@ int main() {
 			bool left_lane = false;
 			
 			double lane_speed = 49.0;
-			
+			double car_s_pre += 0.02*car_speed;
 			int l_cars = 0;
 			int r_cars = 0;
 			
@@ -280,11 +280,14 @@ int main() {
 					
 				//check_car_s += ((double)prev_size*0.02*check_speed);
 				check_car_s += 0.02*check_speed;
+				//prevent any unforeseen behavior to cause frontend collision
+				if ((abs(d-car_d) < 1.5)&&((check_car_s - car_s_pre) < 5)){
+					too_close = true
+				}
 				
-				
-				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2)))||(abs(d-car_d) < 2))
+				if ((d <= (2+4*lane+2))&&(d >= (2+4*lane-2))//||(abs(d-car_d) < 2)
 				{
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))//prev 30 
+					if ((check_car_s > car_s_pre)&&((check_car_s - car_s_pre) < 30))//prev 30 
 					{
 						too_close = true;
 						lane_speed = check_speed*2.24;
@@ -296,7 +299,7 @@ int main() {
 				} 
 				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s < car_s - 10)||((check_car_s - car_s) > 30))//prev 45 & 30
+					if ((check_car_s < car_s_pre - 20)||((check_car_s - car_s_pre) > 30))//prev 45 & 30
 					{
 						right_lane = true;
 					}
@@ -313,7 +316,7 @@ int main() {
 				
 				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s < car_s - 10)||((check_car_s - car_s) > 30))//prev 45 & 30
+					if ((check_car_s < car_s_pre - 20)||((check_car_s - car_s_pre) > 30))//prev 45 & 30
 					{
 						left_lane = true;
 					}
@@ -370,7 +373,7 @@ int main() {
 			{
 				if (lane_speed < ref_vel)
 				{
-				ref_vel -=.224*0.5;
+				ref_vel -=.224*0.3;
 				}
 			}
 			else if (ref_vel < 49.5)
