@@ -288,7 +288,7 @@ int main() {
 					too_close = true;
 				}
 				
-				if ((d <= (2+4*lane+2))&&(d >= (2+4*lane-2))//||(abs(d-car_d) < 2)
+				if ((d <= (2+4*lane+2))&&(d >= (2+4*lane-2)))//||(abs(d-car_d) < 2)
 				{
 					if ((check_car_s > car_s_pre)&&((check_car_s - car_s_pre) < 30))//prev 30 
 					{
