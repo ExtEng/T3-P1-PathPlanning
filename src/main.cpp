@@ -259,8 +259,8 @@ int main() {
 			
 			bool too_close = false;
 			bool change_lane = false;
-			bool right_lane = false;
-			bool left_lane = false;
+			bool right_lane = true;
+			bool left_lane = true;
 			
 			double lane_speed = 49.0;
 			
@@ -300,6 +300,11 @@ int main() {
 				} 
 				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
+					if ((check_car_s > car_s - 40)&&((check_car_s - car_s) < 50))
+					{
+						right_lane = false;
+					}
+					/* 
 					if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 50))
 					{
 						right_lane = true;
@@ -307,7 +312,7 @@ int main() {
 					else
 					{
 						right_lane = false;
-					}
+					} */
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
 						
 						r_cars += 1;
@@ -317,14 +322,17 @@ int main() {
 				
 				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 50))
+					if ((check_car_s > car_s - 40)&&((check_car_s - car_s) < 50)){
+						left_lane = false;
+					}
+					/* if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 50))
 					{
 						left_lane = true;
 					}
 					else
 					{
 						left_lane = false;
-					}
+					} */
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
 						
 						l_cars += 1;
