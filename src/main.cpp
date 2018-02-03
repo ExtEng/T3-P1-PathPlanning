@@ -333,7 +333,7 @@ int main() {
 			
 			if (change_lane)
 			{
-				if (l_cars =< r_cars)
+				if (l_cars <= r_cars)
 				{
 					if ((left_lane)&&(lane>0))
 					{
