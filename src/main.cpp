@@ -201,7 +201,7 @@ int main() {
   	map_waypoints_dy.push_back(d_y);
   }
   
-  //Start in lane 1
+ //Start in lane 1
   int lane = 1;
   
   //Reference Velocity 
@@ -248,10 +248,10 @@ int main() {
 			
 			int prev_size = previous_path_x.size();
 			
-			/*if (prev_size > 0)
+			if (prev_size > 0)
 			{
 				car_s = end_path_s;
-			}*/
+			}
 			
 			bool too_close = false;
 			bool change_lane = false;
@@ -259,19 +259,17 @@ int main() {
 			bool left_lane = false;
 			
 			double lane_speed = 49.0;
-			double car_s_pre = car_s + 0.02*car_speed;
+			
 			int l_cars = 0;
 			int r_cars = 0;
 			
 			
-			if (changing_lane)
-			{
-				if (abs(car_d-(2+4*lane))< 1.2)
-				{
-				//we have arrived in our desired lane, switch to path follow state
-					changing_lane = false;
-				} 
-			}
+			if (changing_lane){
+					if (abs(car_d-(2+4*lane))< 1.2) {
+						//we have arrived in our desired lane, switch to path follow state
+						changing_lane = false;
+					} 
+				}
 			for (int i = 0; i < sensor_fusion.size(); i++)
 			{
 				float d = sensor_fusion[i][6];
@@ -280,24 +278,14 @@ int main() {
 				double check_speed = sqrt(vx*vx+vy*vy);
 				double check_car_s = sensor_fusion[i][5];
 					
-				//check_car_s += ((double)prev_size*0.02*check_speed);
-				check_car_s += 0.02*check_speed;
-				//prevent any unforeseen behavior to cause frontend collision
+				check_car_s += ((double)prev_size*0.02*check_speed);
 				
-				cout<<"Car_s_pred :"<<car_s_pre<<"o_s_pred :"<< check_car_s <<std::endl;
-				
-				if ((abs(d-car_d) < 1.5)&&((check_car_s - car_s_pre) < 5))
+				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
-					cout<<"Danger"<<std::endl;
-					too_close = true;
-				}
-				
-				if ((d <= (2+4*lane+2))&&(d >= (2+4*lane-2)))//||(abs(d-car_d) < 2)
-				{
-					if ((check_car_s > car_s_pre)&&((check_car_s - car_s_pre) < 30))//prev 30 
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))
 					{
 						too_close = true;
-						lane_speed = check_speed*2.24;
+						lane_speed = check_speed;
 						if (!changing_lane){
 						change_lane = true;
 						}
@@ -306,7 +294,7 @@ int main() {
 				} 
 				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s < car_s_pre - 20)||((check_car_s - car_s_pre) > 30))//prev 45 & 30
+					if ((check_car_s < car_s - 45)||((check_car_s - car_s) > 30))
 					{
 						right_lane = true;
 					}
@@ -314,7 +302,7 @@ int main() {
 					{
 						right_lane = false;
 					}
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 120)){ //prev 80
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
 						
 						r_cars += 1;
 						
@@ -323,7 +311,7 @@ int main() {
 				
 				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s < car_s_pre - 20)||((check_car_s - car_s_pre) > 30))//prev 45 & 30
+					if ((check_car_s < car_s - 45)||((check_car_s - car_s) > 30))
 					{
 						left_lane = true;
 					}
@@ -331,7 +319,7 @@ int main() {
 					{
 						left_lane = false;
 					}
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 120)){ //prev 80
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
 						
 						l_cars += 1;
 						
@@ -378,10 +366,7 @@ int main() {
 			
 			if (too_close)
 			{
-				if (lane_speed < ref_vel)
-				{
-				ref_vel -=.224*0.3;
-				}
+				ref_vel -=.224*0.7;
 			}
 			else if (ref_vel < 49.5)
 			{
@@ -430,11 +415,23 @@ int main() {
 				ptsy.push_back(ref_y);
 			}
 			
+<<<<<<< HEAD
 			double spline_space = 60;
 			
 			vector<double> next_wp0 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
 			vector<double> next_wp1 = getXY(car_s+spline_space+30,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
 			vector<double> next_wp2 = getXY(car_s+spline_space+60,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+||||||| 24bc062... Previous Trial - Successfull for 14.5 miles
+			double spline_space = 60;
+			
+			vector<double> next_wp0 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp1 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp2 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+=======
+			vector<double> next_wp0 = getXY(car_s+30,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp1 = getXY(car_s+60,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp2 = getXY(car_s+90,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+>>>>>>> parent of 24bc062... Previous Trial - Successfull for 14.5 miles
 			
 			ptsx.push_back(next_wp0[0]);
 			ptsx.push_back(next_wp1[0]);
