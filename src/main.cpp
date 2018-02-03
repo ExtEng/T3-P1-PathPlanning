@@ -258,6 +258,11 @@ int main() {
 			bool right_lane = false;
 			bool left_lane = false;
 			
+			double lane_speed = 49.0;
+			
+			int l_cars = 0;
+			int r_cars = 0;
+			
 			if (changing_lane){
 					if (abs(car_d-(2+4*lane))< 1.2) {
 						//we have arrived in our desired lane, switch to path follow state
@@ -275,11 +280,13 @@ int main() {
 				check_car_s += ((double)prev_size*0.02*check_speed);
 				
 				
+				
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))
 					{
 						too_close = true;
+						lane_speed = check_speed;
 						if (!changing_lane){
 						change_lane = true;
 						}
@@ -287,7 +294,7 @@ int main() {
 				} 
 				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s < car_s - 30)||((check_car_s - car_s) > 30))
+					if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 30))
 					{
 						right_lane = true;
 					}
@@ -299,7 +306,7 @@ int main() {
 				
 				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s < car_s - 30)||((check_car_s - car_s) > 30))
+					if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 30))
 					{
 						left_lane = true;
 					}
@@ -310,7 +317,7 @@ int main() {
 				}
 				
 			}
-			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<std::endl;
+			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<" Lane Speed: "<<lane_speed<<std::endl;
 			
 			if (change_lane)
 			{
