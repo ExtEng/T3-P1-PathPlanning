@@ -274,8 +274,6 @@ int main() {
 					
 				check_car_s += ((double)prev_size*0.02*check_speed);
 				
-				//Have i completed the lane transition ?
-					
 				
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
@@ -287,7 +285,7 @@ int main() {
 						}
 					}
 				} 
-				else if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
+				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
 					if ((check_car_s < car_s - 30)||((check_car_s - car_s) > 30))
 					{
@@ -298,7 +296,8 @@ int main() {
 						right_lane = false;
 					}
 				} 
-				else if ((d < (4*lane))&&(d > (4*(lane-1))))
+				
+				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
 					if ((check_car_s < car_s - 30)||((check_car_s - car_s) > 30))
 					{
@@ -311,7 +310,7 @@ int main() {
 				}
 				
 			}
-			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << "Changing_lane: "<< changing_lane <<std::endl;
+			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<std::endl;
 			
 			if (change_lane)
 			{
