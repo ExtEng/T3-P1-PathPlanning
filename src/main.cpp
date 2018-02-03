@@ -285,6 +285,7 @@ int main() {
 				//prevent any unforeseen behavior to cause frontend collision
 				if ((abs(d-car_d) < 1.5)&&((check_car_s - car_s_pre) < 5))
 				{
+					cout<<"Danger"<<std::endl;
 					too_close = true;
 				}
 				
