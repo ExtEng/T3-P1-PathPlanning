@@ -248,14 +248,14 @@ int main() {
 			
 			int prev_size = previous_path_x.size();
 			
-			double car_S_A = car_s;
+			double car_s_A = car_s;
 			
 			
 			if (prev_size > 0)
 			{
 				car_s = end_path_s;
 			}
-			cout<<"Delta_car: "<<(car_S-car_s_A)<<std::endl;
+			cout<<"Delta_car: "<<(car_s-car_s_A)<<std::endl;
 			
 			bool too_close = false;
 			bool change_lane = false;
