@@ -289,7 +289,7 @@ int main() {
 				} 
 				else if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s < car_s - 15)||((check_car_s - car_s) > 40))
+					if ((check_car_s < car_s - 30)||((check_car_s - car_s) > 30))
 					{
 						right_lane = true;
 					}
@@ -300,7 +300,7 @@ int main() {
 				} 
 				else if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s < car_s - 15)||((check_car_s - car_s) > 40))
+					if ((check_car_s < car_s - 30)||((check_car_s - car_s) > 30))
 					{
 						left_lane = true;
 					}
@@ -311,7 +311,7 @@ int main() {
 				}
 				
 			}
-			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << std::endl;
+			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << "Changing_lane: "<< changing_lane <<std::endl;
 			
 			if (change_lane)
 			{
@@ -331,7 +331,7 @@ int main() {
 			
 			if (too_close)
 			{
-				ref_vel -=.224;
+				ref_vel -=.224*0.7;
 			}
 			else if (ref_vel < 49.5)
 			{
