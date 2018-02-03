@@ -287,7 +287,7 @@ int main() {
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 60))//prev 30 
 					{
 						too_close = true;
-						lane_speed = check_speed/2.24;
+						lane_speed = check_speed*2.24;
 						if (!changing_lane){
 						change_lane = true;
 						}
