@@ -246,10 +246,10 @@ int main() {
 			
 			int prev_size = previous_path_x.size();
 			
-			/* if (prev_size > 0)
+			if (prev_size > 0)
 			{
 				car_s = end_path_s;
-			} */
+			}
 			
 			bool too_close = false;
 			bool change_lane = false;
