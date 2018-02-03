@@ -282,7 +282,7 @@ int main() {
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))
 					{
 						too_close = true;
-						if !(changing_lane){
+						if (!changing_lane){
 						change_lane = true;
 						}
 					}
