@@ -284,8 +284,7 @@ int main() {
 				check_car_s += 0.02*check_speed;
 				//prevent any unforeseen behavior to cause frontend collision
 				
-				cout<<"Car_s_pred :"<<car_s_pre<<"o_s_pred :"<< check_car_s <<std::endl
-				
+				cout<<"Car_s_pred :"<<car_s_pre<<"o_s_pred :"<< check_car_s <<std::endl;
 				
 				if ((abs(d-car_d) < 1.5)&&((check_car_s - car_s_pre) < 5))
 				{
