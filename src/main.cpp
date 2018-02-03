@@ -248,10 +248,10 @@ int main() {
 			
 			int prev_size = previous_path_x.size();
 			
-			if (prev_size > 0)
+			/*if (prev_size > 0)
 			{
 				car_s = end_path_s;
-			}
+			}*/
 			
 			bool too_close = false;
 			bool change_lane = false;
@@ -278,16 +278,16 @@ int main() {
 				double check_speed = sqrt(vx*vx+vy*vy);
 				double check_car_s = sensor_fusion[i][5];
 					
-				check_car_s += ((double)prev_size*0.02*check_speed);
-				
+				//check_car_s += ((double)prev_size*0.02*check_speed);
+				check_car_s += 0.02*check_speed);
 				
 				
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 60))//prev 30 
 					{
 						too_close = true;
-						lane_speed = check_speed;
+						lane_speed = check_speed/2.24;
 						if (!changing_lane){
 						change_lane = true;
 						}
@@ -296,7 +296,7 @@ int main() {
 				} 
 				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s < car_s - 45)||((check_car_s - car_s) > 30))
+					if ((check_car_s < car_s - 15)||((check_car_s - car_s) > 60))//prev 45 & 30
 					{
 						right_lane = true;
 					}
@@ -304,7 +304,7 @@ int main() {
 					{
 						right_lane = false;
 					}
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 120)){ //prev 80
 						
 						r_cars += 1;
 						
@@ -313,7 +313,7 @@ int main() {
 				
 				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s < car_s - 45)||((check_car_s - car_s) > 30))
+					if ((check_car_s < car_s - 15)||((check_car_s - car_s) > 60))//prev 45 & 30
 					{
 						left_lane = true;
 					}
@@ -321,7 +321,7 @@ int main() {
 					{
 						left_lane = false;
 					}
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 120)){ //prev 80
 						
 						l_cars += 1;
 						
@@ -368,7 +368,10 @@ int main() {
 			
 			if (too_close)
 			{
-				ref_vel -=.224*0.7;
+				if (lane_speed < ref_vel)
+				{
+				ref_vel -=.224*0.5;
+				}
 			}
 			else if (ref_vel < 49.5)
 			{
@@ -417,9 +420,11 @@ int main() {
 				ptsy.push_back(ref_y);
 			}
 			
-			vector<double> next_wp0 = getXY(car_s+30,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp1 = getXY(car_s+60,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp2 = getXY(car_s+90,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			double spline_space = 60;
+			
+			vector<double> next_wp0 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp1 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp2 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
 			
 			ptsx.push_back(next_wp0[0]);
 			ptsx.push_back(next_wp1[0]);
