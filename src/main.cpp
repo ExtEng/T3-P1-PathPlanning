@@ -263,6 +263,7 @@ int main() {
 			int l_cars = 0;
 			int r_cars = 0;
 			
+			
 			if (changing_lane){
 					if (abs(car_d-(2+4*lane))< 1.2) {
 						//we have arrived in our desired lane, switch to path follow state
@@ -291,10 +292,11 @@ int main() {
 						change_lane = true;
 						}
 					}
+					
 				} 
 				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 30))
+					if ((check_car_s < car_s - 45)||((check_car_s - car_s) > 30))
 					{
 						right_lane = true;
 					}
@@ -302,11 +304,16 @@ int main() {
 					{
 						right_lane = false;
 					}
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
+						
+						r_cars += 1;
+						
+					}
 				} 
 				
 				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 30))
+					if ((check_car_s < car_s - 45)||((check_car_s - car_s) > 30))
 					{
 						left_lane = true;
 					}
@@ -314,25 +321,49 @@ int main() {
 					{
 						left_lane = false;
 					}
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
+						
+						l_cars += 1;
+						
+					}
 				}
 				
 			}
-			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<" Lane Speed: "<<lane_speed<<std::endl;
+			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<" Lane Speed: "<<lane_speed<<" L: "<<l_cars<<" R: "<<r_cars<<std::endl;
 			
 			if (change_lane)
 			{
-				if ((left_lane)&&(lane>0))
+				if (l_cars =< r_cars)
 				{
-					lane =  lane - 1;
-					too_close = false;
-					changing_lane = true;
+					if ((left_lane)&&(lane>0))
+					{
+						lane =  lane - 1;
+						too_close = false;
+						changing_lane = true;
+					}
+					else if ((right_lane)&&(lane < 2))
+					{
+						lane = lane + 1;
+						too_close = false;
+						changing_lane = true;
+					}
 				}
-				else if ((right_lane)&&(lane < 2))
+				else 
 				{
-					lane = lane + 1;
-					too_close = false;
-					changing_lane = true;
+					if ((right_lane)&&(lane < 2))
+					{
+						lane = lane + 1;
+						too_close = false;
+						changing_lane = true;
+					}
+					else if ((left_lane)&&(lane>0))
+					{
+						lane =  lane - 1;
+						too_close = false;
+						changing_lane = true;
+					}
 				}
+				
 			}
 			
 			if (too_close)
