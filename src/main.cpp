@@ -267,7 +267,7 @@ int main() {
 					
 				check_car_s += ((double)prev_size*0.02*check_speed);
 				
-				if ((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2)))
+				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2)))||(abs(d-car_d) < 2))
 				{
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))
 					{
