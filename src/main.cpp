@@ -259,7 +259,7 @@ int main() {
 			bool left_lane = false;
 			
 			double lane_speed = 49.0;
-			double car_s_pre += 0.02*car_speed;
+			double car_s_pre = car_s + 0.02*car_speed;
 			int l_cars = 0;
 			int r_cars = 0;
 			
