@@ -201,7 +201,7 @@ int main() {
   	map_waypoints_dy.push_back(d_y);
   }
   
- //Start in lane 1
+  //Start in lane 1
   int lane = 1;
   
   //Reference Velocity 
@@ -279,6 +279,8 @@ int main() {
 				double check_car_s = sensor_fusion[i][5];
 					
 				check_car_s += ((double)prev_size*0.02*check_speed);
+				
+				
 				
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
@@ -415,23 +417,9 @@ int main() {
 				ptsy.push_back(ref_y);
 			}
 			
-<<<<<<< HEAD
-			double spline_space = 60;
-			
-			vector<double> next_wp0 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp1 = getXY(car_s+spline_space+30,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp2 = getXY(car_s+spline_space+60,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-||||||| 24bc062... Previous Trial - Successfull for 14.5 miles
-			double spline_space = 60;
-			
-			vector<double> next_wp0 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp1 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp2 = getXY(car_s+spline_space,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-=======
 			vector<double> next_wp0 = getXY(car_s+30,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
 			vector<double> next_wp1 = getXY(car_s+60,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
 			vector<double> next_wp2 = getXY(car_s+90,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
->>>>>>> parent of 24bc062... Previous Trial - Successfull for 14.5 miles
 			
 			ptsx.push_back(next_wp0[0]);
 			ptsx.push_back(next_wp1[0]);
