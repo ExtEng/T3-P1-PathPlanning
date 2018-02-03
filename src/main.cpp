@@ -248,10 +248,14 @@ int main() {
 			
 			int prev_size = previous_path_x.size();
 			
+			double car_S_A = car_s;
+			
+			
 			if (prev_size > 0)
 			{
 				car_s = end_path_s;
 			}
+			cout<<"Delta_car: "<<(car_S-car_s_A)<<std::endl;
 			
 			bool too_close = false;
 			bool change_lane = false;
@@ -263,13 +267,14 @@ int main() {
 			int l_cars = 0;
 			int r_cars = 0;
 			
-			
-			if (changing_lane){
-					if (abs(car_d-(2+4*lane))< 1.2) {
-						//we have arrived in our desired lane, switch to path follow state
-						changing_lane = false;
-					} 
-				}
+			if (changing_lane)
+			{
+				if (abs(car_d-(2+4*lane))< 1.2) 
+				{
+					//we have arrived in our desired lane, switch to path follow state
+					changing_lane = false;
+				} 
+			}
 			for (int i = 0; i < sensor_fusion.size(); i++)
 			{
 				float d = sensor_fusion[i][6];
@@ -279,9 +284,7 @@ int main() {
 				double check_car_s = sensor_fusion[i][5];
 					
 				check_car_s += ((double)prev_size*0.02*check_speed);
-				
-				
-				
+								
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))
