@@ -207,7 +207,9 @@ int main() {
   //Reference Velocity 
   double ref_vel = 0.0; //mph
   
-  h.onMessage([&ref_vel, &map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy, &lane](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
+  bool changing_lane = false;
+  
+  h.onMessage([&ref_vel, &map_waypoints_x,&map_waypoints_y,&map_waypoints_s,&map_waypoints_dx,&map_waypoints_dy, &lane, &changing_lane](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
@@ -253,10 +255,15 @@ int main() {
 			
 			bool too_close = false;
 			bool change_lane = false;
-			
 			bool right_lane = false;
 			bool left_lane = false;
 			
+			if (changing_lane){
+					if (abs(car_d-(2+4*lane))< 1.2) {
+						//we have arrived in our desired lane, switch to path follow state
+						changing_lane = false;
+					} 
+				}
 			for (int i = 0; i < sensor_fusion.size(); i++)
 			{
 				float d = sensor_fusion[i][6];
@@ -267,12 +274,17 @@ int main() {
 					
 				check_car_s += ((double)prev_size*0.02*check_speed);
 				
-				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2)))||(abs(d-car_d) < 2))
+				//Have i completed the lane transition ?
+					
+				
+				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))
 					{
 						too_close = true;
+						if !(changing_lane){
 						change_lane = true;
+						}
 					}
 				} 
 				else if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
@@ -307,11 +319,13 @@ int main() {
 				{
 					lane =  lane - 1;
 					too_close = false;
+					changing_lane = true;
 				}
 				else if ((right_lane)&&(lane < 2))
 				{
 					lane = lane + 1;
 					too_close = false;
+					changing_lane = true;
 				}
 			}
 			
@@ -367,16 +381,16 @@ int main() {
 			}
 			
 			vector<double> next_wp0 = getXY(car_s+30,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp1 = getXY(car_s+50,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			//vector<double> next_wp2 = getXY(car_s+90,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp1 = getXY(car_s+60,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp2 = getXY(car_s+90,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
 			
 			ptsx.push_back(next_wp0[0]);
 			ptsx.push_back(next_wp1[0]);
-			//ptsx.push_back(next_wp2[0]);
+			ptsx.push_back(next_wp2[0]);
 			
 			ptsy.push_back(next_wp0[1]);
 			ptsy.push_back(next_wp1[1]);
-			//ptsy.push_back(next_wp2[1]);
+			ptsy.push_back(next_wp2[1]);
 			
 			for (int i = 0; i < ptsx.size(); i++)
 			{
