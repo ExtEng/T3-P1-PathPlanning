@@ -374,7 +374,7 @@ int main() {
 			{
 				if (lane_speed < ref_vel)
 				{
-				ref_vel -=.224*0.3;
+				ref_vel -=.224;
 				}
 			}
 			else if (ref_vel < 49.5)
