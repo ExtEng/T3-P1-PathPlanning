@@ -284,13 +284,14 @@ int main() {
 				double check_car_s = sensor_fusion[i][5];
 					
 				check_car_s += ((double)prev_size*0.02*check_speed);
-								
+				
+				
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 30))
 					{
 						too_close = true;
-						lane_speed = check_speed;
+						lane_speed = check_speed*2.24;
 						if (!changing_lane){
 						change_lane = true;
 						}
@@ -371,7 +372,10 @@ int main() {
 			
 			if (too_close)
 			{
-				ref_vel -=.224*0.7;
+				if (lane_speed < ref_vel)
+				{
+				ref_vel -=.224*0.3;
+				}
 			}
 			else if (ref_vel < 49.5)
 			{
