@@ -279,7 +279,7 @@ int main() {
 				double check_car_s = sensor_fusion[i][5];
 					
 				//check_car_s += ((double)prev_size*0.02*check_speed);
-				check_car_s += 0.02*check_speed);
+				check_car_s += 0.02*check_speed;
 				
 				
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
