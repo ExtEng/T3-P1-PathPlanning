@@ -313,7 +313,7 @@ int main() {
 					{
 						right_lane = false;
 					} */
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 120)){
 						
 						r_cars += 1;
 						
@@ -333,7 +333,7 @@ int main() {
 					{
 						left_lane = false;
 					} */
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 80)){
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 120)){
 						
 						l_cars += 1;
 						
