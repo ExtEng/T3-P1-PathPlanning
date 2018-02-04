@@ -270,7 +270,7 @@ int main() {
 			
 			if (changing_lane)
 			{
-				if (abs(car_d-(2+4*lane))< 1.2) 
+				if (abs(car_d-(2+4*lane))< 1.7) 
 				{
 					//we have arrived in our desired lane, switch to path follow state
 					changing_lane = false;
@@ -307,7 +307,7 @@ int main() {
 				} 
 				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s > car_s - 10)&&((check_car_s - car_s) < 30))
+					if ((check_car_s > car_s - 15)&&((check_car_s - car_s) < 30))
 					{
 						right_lane = false;
 					}
@@ -329,7 +329,7 @@ int main() {
 				
 				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s > car_s - 10)&&((check_car_s - car_s) < 30)){
+					if ((check_car_s > car_s - 15)&&((check_car_s - car_s) < 30)){
 						left_lane = false;
 					}
 					/* if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 50))
@@ -439,9 +439,9 @@ int main() {
 				ptsy.push_back(ref_y);
 			}
 			
-			vector<double> next_wp0 = getXY(car_s+30,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp1 = getXY(car_s+60,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp2 = getXY(car_s+90,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp0 = getXY(car_s+25,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp1 = getXY(car_s+50,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp2 = getXY(car_s+75,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
 			
 			ptsx.push_back(next_wp0[0]);
 			ptsx.push_back(next_wp1[0]);
