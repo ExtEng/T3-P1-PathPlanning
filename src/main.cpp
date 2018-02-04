@@ -288,7 +288,7 @@ int main() {
 				
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 20))
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 25))
 					{
 						too_close = true;
 						lane_speed = check_speed*2.24;
