@@ -270,7 +270,7 @@ int main() {
 			
 			if (changing_lane)
 			{
-				if (abs(car_d-(2+4*lane))< 1.7) 
+				if (abs(car_d-(2+4*lane))< 1.95) 
 				{
 					//we have arrived in our desired lane, switch to path follow state
 					changing_lane = false;
@@ -311,15 +311,7 @@ int main() {
 					{
 						right_lane = false;
 					}
-					/* 
-					if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 50))
-					{
-						right_lane = true;
-					}
-					else
-					{
-						right_lane = false;
-					} */
+					
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 150)){
 						
 						r_cars += 1;
@@ -332,14 +324,7 @@ int main() {
 					if ((check_car_s > car_s - 15)&&((check_car_s - car_s) < 30)){
 						left_lane = false;
 					}
-					/* if ((check_car_s < car_s - 40)||((check_car_s - car_s) > 50))
-					{
-						left_lane = true;
-					}
-					else
-					{
-						left_lane = false;
-					} */
+					
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 150)){
 						
 						l_cars += 1;
@@ -396,6 +381,10 @@ int main() {
 			{
 				ref_vel +=.224;
 			}
+			else if ((ref_vel < 49.5))
+			{
+				ref_vel +=.112;
+			}
 			
           	json msgJson;
 
@@ -439,7 +428,7 @@ int main() {
 				ptsy.push_back(ref_y);
 			}
 			
-			double spacing = 15;
+			double spacing = 20;
 			
 			if (changing_lane){
 				spacing = 30;
