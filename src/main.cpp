@@ -379,7 +379,7 @@ int main() {
 			}
 			else if ((ref_vel < 49.5)&&(!changing_lane))
 			{
-				ref_vel +=.224;
+				ref_vel +=.224*0.7;
 			}
 			else if ((ref_vel < 49.5))
 			{
