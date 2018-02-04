@@ -263,6 +263,7 @@ int main() {
 			bool left_lane = true;
 			
 			double lane_speed = 49.0;
+			double inlane_min_car_s = 100;
 			
 			int l_cars = 0;
 			int r_cars = 0;
@@ -282,19 +283,25 @@ int main() {
 				double vy = sensor_fusion[i][4];
 				double check_speed = sqrt(vx*vx+vy*vy);
 				double check_car_s = sensor_fusion[i][5];
-					
+				
 				check_car_s += ((double)prev_size*0.02*check_speed);
-				cout<<"Added Speed: "<<((double)prev_size*0.02*check_speed)<<std::endl;
+				//cout<<"Added Speed: "<<((double)prev_size*0.02*check_speed)<<std::endl;
 				
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{
 					if ((check_car_s > car_s)&&((check_car_s - car_s) < 25))
 					{
 						too_close = true;
-						lane_speed = check_speed*2.24;
+						if ((check_car_s - car_s) < inlane_min_car_s){
+							inlane_min_car_s = (check_car_s - car_s);
+							cout<<"Inlane Car S: "<< inlane_min_car_s <<std::endl;
+							lane_speed = check_speed*2.24;
+						}
+						
 						if (!changing_lane){
 						change_lane = true;
 						}
+						
 					}
 					
 				} 
@@ -313,7 +320,7 @@ int main() {
 					{
 						right_lane = false;
 					} */
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 120)){
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 150)){
 						
 						r_cars += 1;
 						
@@ -333,7 +340,7 @@ int main() {
 					{
 						left_lane = false;
 					} */
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 120)){
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 150)){
 						
 						l_cars += 1;
 						
@@ -341,7 +348,7 @@ int main() {
 				}
 				
 			}
-			std::cout << "lane: " << lane << setprecision(3) << "car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<" Lane Speed: "<<lane_speed<<" L: "<<l_cars<<" R: "<<r_cars<<std::endl;
+			std::cout << "lane: " << lane << setprecision(3) << " car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<" Lane Speed: "<<lane_speed<<" L: "<<l_cars<<" R: "<<r_cars<<std::endl;
 			
 			if (change_lane)
 			{
