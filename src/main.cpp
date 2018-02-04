@@ -439,9 +439,15 @@ int main() {
 				ptsy.push_back(ref_y);
 			}
 			
-			vector<double> next_wp0 = getXY(car_s+25,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp1 = getXY(car_s+50,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
-			vector<double> next_wp2 = getXY(car_s+75,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			double spacing = 15;
+			
+			if (changing_lane){
+				spacing = 30;
+			}
+			
+			vector<double> next_wp0 = getXY(car_s+spacing,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp1 = getXY(car_s+spacing*2,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
+			vector<double> next_wp2 = getXY(car_s+spacing*3,(2+4*lane),map_waypoints_s,map_waypoints_x,map_waypoints_y);
 			
 			ptsx.push_back(next_wp0[0]);
 			ptsx.push_back(next_wp1[0]);
