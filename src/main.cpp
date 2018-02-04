@@ -348,7 +348,7 @@ int main() {
 				}
 				
 			}
-			std::cout << "lane: " << lane << setprecision(3) << " car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<" Lane Speed: "<<lane_speed<<" L: "<<l_cars<<" R: "<<r_cars<<std::endl;
+			std::cout << "lane: " << lane << setprecision(3) << " car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<" Lane Speed: "<<lane_speed<<" Car Speed : " <<ref_vel<<" L: "<<l_cars<<" R: "<<r_cars<<std::endl;
 			
 			if (change_lane)
 			{
