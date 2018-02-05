@@ -258,6 +258,7 @@ int main() {
 			cout<<"Delta_car: "<<(car_s-car_s_A)<<std::endl;
 			
 			bool too_close = false;
+			bool really_close = false;
 			bool change_lane = false;
 			bool right_lane = true;
 			bool left_lane = true;
@@ -270,7 +271,7 @@ int main() {
 			
 			if (changing_lane)
 			{
-				if (abs(car_d-(2+4*lane))< 1.95) 
+				if (abs(car_d-(2+4*lane))< 1.9) 
 				{
 					//we have arrived in our desired lane, switch to path follow state
 					changing_lane = false;
@@ -290,12 +291,20 @@ int main() {
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{	
 					//Added 10 meter buffer for rapid acceleration/decceleration of other cars in congested traffic 
-					if ((check_car_s > car_s-2)&&((check_car_s - car_s) < 28))
+					if ((check_car_s > car_s)&&((check_car_s - car_s) < 28))
 					{
-						too_close = true;
+						if ((check_car_s - car_s) < 10)
+						{
+							really_close = true;
+						}
+						else 
+						{
+							too_close = true;
+						}
+						
 						if ((check_car_s - car_s) < inlane_min_car_s){
 							inlane_min_car_s = (check_car_s - car_s);
-							cout<<"Inlane Car S: "<< inlane_min_car_s <<std::endl;
+							//cout<<"Inlane Car S: "<< inlane_min_car_s <<std::endl;
 							lane_speed = check_speed*2.24;
 						}
 						//Don't change lanes in rapid succesion or if the front car is too close
@@ -308,7 +317,7 @@ int main() {
 				} 
 				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s > car_s - 12)&&((check_car_s - car_s) < 30))
+					if ((check_car_s > car_s - 15)&&((check_car_s - car_s) < 30))
 					{
 						right_lane = false;
 					}
@@ -322,7 +331,7 @@ int main() {
 				
 				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s > car_s - 12)&&((check_car_s - car_s) < 30)){
+					if ((check_car_s > car_s - 15)&&((check_car_s - car_s) < 30)){
 						left_lane = false;
 					}
 					
@@ -334,7 +343,26 @@ int main() {
 				}
 				
 			}
-			std::cout << "lane: " << lane << setprecision(3) << " car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<" Lane Speed: "<<lane_speed<<" Car Speed : " <<ref_vel<<" L: "<<l_cars<<" R: "<<r_cars<<std::endl;
+			
+			if (really_close)
+			{
+				ref_vel -=.224*1.5;
+			}
+			else if (too_close)
+			{
+				if (lane_speed < ref_vel)
+				{
+				ref_vel -=.224;
+				}
+			}
+			else if ((ref_vel < 49.5)&&(!changing_lane))
+			{
+				ref_vel +=.224*0.8;
+			}
+			else if ((ref_vel < 49.5))
+			{
+				ref_vel +=.112;
+			}
 			
 			if (change_lane)
 			{
@@ -371,21 +399,9 @@ int main() {
 				
 			}
 			
-			if (too_close)
-			{
-				if (lane_speed < ref_vel)
-				{
-				ref_vel -=.224;
-				}
-			}
-			else if ((ref_vel < 49.5)&&(!changing_lane))
-			{
-				ref_vel +=.224*0.7;
-			}
-			else if ((ref_vel < 49.5))
-			{
-				ref_vel +=.112;
-			}
+			
+			
+			std::cout << "lane: " << lane << setprecision(3) << " car_s: " << car_s << " car_d: " << car_d <<" Change lane: " << change_lane <<" left_lane: " << left_lane << " right_lane: " << right_lane << " Changing_lane: "<< changing_lane <<" Lane Speed: "<<lane_speed<<" Car Speed : " <<ref_vel<<" L: "<<l_cars<<" R: "<<r_cars<<std::endl;
 			
           	json msgJson;
 
@@ -429,7 +445,7 @@ int main() {
 				ptsy.push_back(ref_y);
 			}
 			
-			double spacing = 20;
+			double spacing = 25;
 			
 			if (changing_lane){
 				spacing = 30;
