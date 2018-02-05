@@ -290,7 +290,7 @@ int main() {
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
 				{	
 					//Added 10 meter buffer for rapid acceleration/decceleration of other cars in congested traffic 
-					if ((check_car_s > car_s-10)&&((check_car_s - car_s) < 25))
+					if ((check_car_s > car_s-2)&&((check_car_s - car_s) < 28))
 					{
 						too_close = true;
 						if ((check_car_s - car_s) < inlane_min_car_s){
@@ -299,7 +299,7 @@ int main() {
 							lane_speed = check_speed*2.24;
 						}
 						//Don't change lanes in rapid succesion or if the front car is too close
-						if ((!changing_lane)&&(((check_car_s - car_s) < 8))){
+						if ((!changing_lane)&&(((check_car_s - car_s) < 5))){
 						change_lane = true;
 						}
 						
