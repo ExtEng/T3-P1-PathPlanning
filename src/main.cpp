@@ -288,8 +288,9 @@ int main() {
 				//cout<<"Added Speed: "<<((double)prev_size*0.02*check_speed)<<std::endl;
 				
 				if (((d <= (2+4*lane+2) )&& (d >= (2+4*lane-2))))//||(abs(d-car_d) < 2)
-				{
-					if ((check_car_s > car_s)&&((check_car_s - car_s) < 25))
+				{	
+					//Added 10 meter buffer for rapid acceleration/decceleration of other cars in congested traffic 
+					if ((check_car_s > car_s-10)&&((check_car_s - car_s) < 25))
 					{
 						too_close = true;
 						if ((check_car_s - car_s) < inlane_min_car_s){
@@ -297,8 +298,8 @@ int main() {
 							cout<<"Inlane Car S: "<< inlane_min_car_s <<std::endl;
 							lane_speed = check_speed*2.24;
 						}
-						
-						if (!changing_lane){
+						//Don't change lanes in rapid succesion or if the front car is too close
+						if ((!changing_lane)&&(((check_car_s - car_s) < 8))){
 						change_lane = true;
 						}
 						
