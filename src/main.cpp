@@ -299,7 +299,7 @@ int main() {
 							lane_speed = check_speed*2.24;
 						}
 						//Don't change lanes in rapid succesion or if the front car is too close
-						if ((!changing_lane)&&(((check_car_s - car_s) < 5))){
+						if ((!changing_lane)&&(((check_car_s - car_s) > 5))){
 						change_lane = true;
 						}
 						
