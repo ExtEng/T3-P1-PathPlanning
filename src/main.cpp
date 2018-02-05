@@ -308,7 +308,7 @@ int main() {
 				} 
 				if ((d > (2+4*lane+2))&&(d < (4*(lane+2))))
 				{
-					if ((check_car_s > car_s - 15)&&((check_car_s - car_s) < 30))
+					if ((check_car_s > car_s - 12)&&((check_car_s - car_s) < 30))
 					{
 						right_lane = false;
 					}
@@ -322,7 +322,7 @@ int main() {
 				
 				if ((d < (4*lane))&&(d > (4*(lane-1))))
 				{
-					if ((check_car_s > car_s - 15)&&((check_car_s - car_s) < 30)){
+					if ((check_car_s > car_s - 12)&&((check_car_s - car_s) < 30)){
 						left_lane = false;
 					}
 					
