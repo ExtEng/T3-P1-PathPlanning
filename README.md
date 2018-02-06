@@ -76,6 +76,7 @@ The following image is an example of a Keep lane and maintain speed
 ![alt text][image4]
 
 The following is a YouTube video of a trial run.
+
 [![Click here](http://img.youtube.com/vi/SylsQSxdqiU/0.jpg)](https://www.youtube.com/watch?v=SylsQSxdqiU)
 
 ### Improvements
